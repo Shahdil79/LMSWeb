@@ -1,0 +1,29 @@
+﻿@model IEnumerable<LMSService.Model.Book>
+
+@{
+    ViewBag.Title = "Books";
+}
+
+<h2>Books</h2>
+
+<div>
+    <table cellpadding="10" cellspacing="10">
+        <tr>
+            <td>Name</td>
+
+            <td>AuthorName</td>
+        </tr>
+
+
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td> @book.name</td>
+                <td> @book.authorName</td>
+            </tr>
+        }
+
+
+    </table>
+</div>
+

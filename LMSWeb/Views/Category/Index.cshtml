@@ -1,0 +1,51 @@
+﻿@model LMSWeb.Models.ViewModel.CatAndSubCat
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Category</h2>
+
+
+<table cellpadding="10" cellspacing="10">
+    <tr>
+        <td>
+            Category
+        </td>
+        <td>
+            Sub Category
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @(Html.DropDownListFor(m => m.Category, new SelectList(Model.Category, "categoryId", "name"), new { @class = "CssCategoryHide" }))
+        </td>
+        <td>
+            @(Html.DropDownListFor(m => m.SubCategory, new SelectList(Model.SubCategory, "categoryId", "name"), new { @class = "CssSubcategoryHide" }))
+        </td>
+    </tr>
+</table>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/jscript">
+    $(function () {
+        $('#Category').change(function () {
+            $.getJSON('/Category/FillSubCategory/' + $('#Category').val(), function (data) {
+                var items = '';
+                $.each(data, function (i, subcat) {
+                    items += "<option value='" + subcat.categoryId + "'>" + subcat.name + "</option>";
+                });
+                $('#SubCategory').html(items);
+            });
+        });
+
+        $('#SubCategory').change(function () {
+            $.getJSON('/Category/FillCategory/' + $('#SubCategory').val(), function (data) {
+                var items = '';
+                $.each(data, function (i, cat) {
+                    items += "<option value='" + cat.categoryId + "'>" + cat.name + "</option>";
+                });
+                $('#Category').html(items);
+            });
+        });
+    });
+</script>
